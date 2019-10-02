@@ -64,14 +64,13 @@ def pop_by_season(df, n):
     for i in range(4):
         pop_seas[i]=find_popular_by_cust(df[df['season']==i], n)
     return pop_seas
-def split_seasons(df, n, pop_s): 
+ def split_seasons(df, n, pop_s): 
     #######popular items to recommend by seasons#######################
     #############pop_s list of popular items for each season, 
     ################n related to numbers of popular items to leave for given activity group###############
-    df.loc[df['season']==0, ['Items']]=df.loc[df['season']==0, ['Items']].apply(lambda x: x+pop_s[0][:n-60])
-    df.loc[df['season']==1, ['Items']]=df.loc[df['season']==1, ['Items']].apply(lambda x: x+pop_s[1][:n-10])
-    df.loc[df['season']==2, ['Items']]=df.loc[df['season']==2, ['Items']].apply(lambda x: x+pop_s[2][:n+20])
-    df.loc[df['season']==3, ['Items']]=df.loc[df['season']==3, ['Items']].apply(lambda x: x+pop_s[3][:n+50])
+    y=[-60, -10, 20, 50]
+    for i in range(4):
+        df.loc[df['season']==i, ['Items']]=df.loc[df['season']==i, ['Items']].apply(lambda x: x+pop_s[i][:n+y[i]])
     return df
 def scores(df, r1):
     ###################scores from apriori library#################
