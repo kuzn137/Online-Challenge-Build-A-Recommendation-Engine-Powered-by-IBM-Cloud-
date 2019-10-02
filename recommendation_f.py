@@ -21,17 +21,7 @@ def remove_extra(vect, a):
 def buy_again(vect, a, b):
 ####recommend items that usually bought more than ones to users who bought this item before########################
     if a not in vect and a in b:
-       vect.append(a)
-    return vect
-def predict(ratings, similarity, type='user'):
-    if type == 'user':
-        mean_user_rating = ratings.mean(axis=1)
-        #We use np.newaxis so that mean_user_rating has same format as ratings
-        ratings_diff = (ratings - mean_user_rating[:, np.newaxis])
-        pred = mean_user_rating[:, np.newaxis] + similarity.dot(ratings_diff) / np.array([np.abs(similarity).sum(axis=1)]).T
-    elif type == 'item':
-        pred = ratings.dot(similarity) / np.array([np.abs(similarity).sum(axis=1)])
-    return pred                     
+       vect.append(a)                     
 def find_popular(df, n):
 ###############find n most popular items#############
     popularity= df['StockCode'].value_counts().to_frame().reset_index().rename(columns={'index':'StockCode', 'StockCode':'count'})
