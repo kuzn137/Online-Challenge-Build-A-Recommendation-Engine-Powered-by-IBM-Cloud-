@@ -99,13 +99,9 @@ def association(apr, r, r1):
     apr1_low = apr1[(apr1['support'] < r) & (apr1['support'] >= r1)]
     apr1_low['item2'] = apr1_low['itemsets'].apply(lambda x: x[0])
     apr2=apr[apr['length']==2]
-    #apr2inv=apr[apr['length']==2]
     apr2['itemsets'] = apr2['itemsets'].apply(lambda x: list(x))
-    #apr2inv['itemsets'] = apr2inv['itemsets'].apply(lambda x: list(x))
     apr2['item2'] = apr2['itemsets'].apply(lambda x: x[1])
-    #apr2inv['item2'] = apr2inv['itemsets'].apply(lambda x: x[0])
     apr2['item1'] = apr2['itemsets'].apply(lambda x: x[0])
-    #apr2inv['item1'] = apr2inv['itemsets'].apply(lambda x: x[1])
     apr12 = pd.merge(apr1_up, apr2, on='item1', how='left')
     apr12['conf2'] = apr12['support_y']/apr12['support_x']
     apr12=apr12[apr12['conf2']>=r]
