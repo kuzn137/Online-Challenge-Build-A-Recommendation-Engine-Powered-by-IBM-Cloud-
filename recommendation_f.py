@@ -229,7 +229,7 @@ x1=[60,50,40,20,10]
 x2=[60,50,30,20,10]
 for i in zip(x1, x2):
     df1=group_recom(df1, pop_cust[0:i[0]], i[1])
-
+####one item goes always with other, found from data exploration#################
 i1='22748P'
 i2='22745M'
 dfn=df1[(df1['StockCode'] == i1) & (df1['StockCode'] != i2)]
