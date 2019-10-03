@@ -62,7 +62,7 @@ def split_seasons(df, n, pop_s):
     y=[-60, -10, 20, 50]
     for i in range(4):
         df.loc[df['season']==i, ['Items']]=df.loc[df['season']==i, ['Items']].apply(lambda x: x+pop_s[i][:n+y[i]])
-        return df
+    return df
 def scores(df, r1):
     ###################scores from apriori library#################
     ###################r1 is minimum score###########################
