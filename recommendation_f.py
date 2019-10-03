@@ -6,7 +6,7 @@ Created on Sat Aug 24 10:17:50 2019
 
 Online Challenge: Build A Recommendation Engine (Powered by IBM Cloud)
 """
-
+from recommendation_ff import recommendation_ff
 import pandas as pd
 import numpy as np
 import warnings; warnings.simplefilter('ignore')
@@ -21,7 +21,9 @@ def remove_extra(vect, a):
 def buy_again(vect, a, b):
 ####recommend items that usually bought more than ones to users who bought this item before########################
     if a not in vect and a in b:
-       vect.append(a)                     
+       vect.append(a)
+    return vect
+               
 def find_popular(df, n):
 ###############find n most popular items#############
     popularity= df['StockCode'].value_counts().to_frame().reset_index().rename(columns={'index':'StockCode', 'StockCode':'count'})
@@ -31,7 +33,6 @@ def find_popular_by_cust(df, n):
     df1=df[['StockCode', 'CustomerID']].drop_duplicates()
     popularity= df1['StockCode'].value_counts().to_frame().reset_index().rename(columns={'index':'StockCode', 'StockCode':'count'})
     return popularity['StockCode'].iloc[0:n].tolist()
-
 def seasons(df):
     ######split data frame by 4 seasons##########
     df['InvoiceDate']=pd.to_datetime(df['InvoiceDate'])
@@ -54,13 +55,16 @@ def pop_by_season(df, n):
     for i in range(4):
         pop_seas[i]=find_popular_by_cust(df[df['season']==i], n)
     return pop_seas
- def split_seasons(df, n, pop_s): 
+def split_seasons(df, n, pop_s): 
     #######popular items to recommend by seasons#######################
     #############pop_s list of popular items for each season, 
     ################n related to numbers of popular items to leave for given activity group###############
     y=[-60, -10, 20, 50]
     for i in range(4):
         df.loc[df['season']==i, ['Items']]=df.loc[df['season']==i, ['Items']].apply(lambda x: x+pop_s[i][:n+y[i]])
+        #df.loc[df['season']==1, ['Items']]=df.loc[df['season']==1, ['Items']].apply(lambda x: x+pop_s[1][:n-10])
+        #df.loc[df['season']==2, ['Items']]=df.loc[df['season']==2, ['Items']].apply(lambda x: x+pop_s[2][:n+20])
+        #df.loc[df['season']==3, ['Items']]=df.loc[df['season']==3, ['Items']].apply(lambda x: x+pop_s[3][:n+50])
     return df
 def scores(df, r1):
     ###################scores from apriori library#################
@@ -223,12 +227,12 @@ for i in range(len(l1)):
     it1 = l2[i]
     dftemp['Items'] = dftemp['Items'].apply(lambda x: x + it1)
     df1.loc[df1['StockCode'].isin([l1[i]])]=dftemp
-df1=group_recom(df1, pop_cust[0:60], 60)
-df1=group_recom(df1, pop_cust[0:50], 50)
-df1=group_recom(df1, pop_cust[0:40], 30)
-df1=group_recom(df1, pop_cust[0:20], 20)
-df1=group_recom(df1, pop_cust[0:10], 10)
-#Item that I found during data exploration, which always goes with other##
+##############low activity groups, popular items are recommended##############
+x1=[60,50,40,20,10]
+x2=[60,50,30,20,10]
+for i in zip(x1, x2):
+    df1=group_recom(df1, pop_cust[0:i[0]], i[1])
+
 i1='22748P'
 i2='22745M'
 dfn=df1[(df1['StockCode'] == i1) & (df1['StockCode'] != i2)]
@@ -245,7 +249,8 @@ df1=df1.drop_duplicates(keep='last')
 df1['Items']=df1['Items'].apply(lambda x: x.split(' '))
 df1.to_csv('result.csv', index=False)
 print(df1)
-#print(df1.equals(df2))
+df2 = recommendation_ff()
+print(df1.equals(df2))
 del df
 del dftr
 del dft
