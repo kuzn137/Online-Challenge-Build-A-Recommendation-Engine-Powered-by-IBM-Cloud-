@@ -6,7 +6,7 @@ Created on Sat Aug 24 10:17:50 2019
 
 Online Challenge: Build A Recommendation Engine (Powered by IBM Cloud)
 """
-from recommendation_ff import recommendation_ff
+
 import pandas as pd
 import numpy as np
 import warnings; warnings.simplefilter('ignore')
@@ -246,8 +246,6 @@ df1=df1.drop_duplicates(keep='last')
 df1['Items']=df1['Items'].apply(lambda x: x.split(' '))
 df1.to_csv('result.csv', index=False)
 print(df1)
-df2 = recommendation_ff()
-print(df1.equals(df2))
 del df
 del dftr
 del dft
