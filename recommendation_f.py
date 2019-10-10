@@ -210,12 +210,12 @@ for i in range(len(l1)):
 dftemp['Items']=dftemp['Items'].apply(lambda x: list(set(list(x)+list(apr1_up))))#pop_cust[0:250]
 df1.loc[df1['item_count']<250]=dftemp
 #####Here are recomendations by item popularity over all seasons #########
-df1=group_recom(df1, pop_cust[0:170], 200)
-df1=group_recom(df1, pop_cust[0:150], 150)
-df1=group_recom(df1, pop_cust[0:120], 120)
-df1=group_recom(df1, pop_cust[0:100], 100)
-df1=group_recom(df1, pop_cust[0:70], 70)
-####apri score recomendations are added####################
+x1=[170,150,120,100,70]
+x2=[200,150,120,100,70]
+for i in zip(x1, x2):
+    df1=group_recom(df1, pop_cust[0:i[0]], i[1])
+    
+####apriori score recomendations are added####################
 assoc, apr1_up, apr_item2, apr_item1 = association(apr3, mini[2], mini[2]-0.047)
 l1 = assoc['item1'].tolist()
 l2=assoc['item2'].tolist()
