@@ -15,7 +15,7 @@ from mlxtend.frequent_patterns import apriori
 
 def remove_extra(vect, a):
 ###REMOVE RECOMMENDED POPULAR ITEMS WHICH REPEAT USER ITEMS #####
-    if a in vect:# and a not in b:
+    if a in vect:
        vect.remove(a)
     return vect
 def buy_again(vect, a, b):
@@ -25,11 +25,15 @@ def buy_again(vect, a, b):
     return vect
                
 def find_popular(df, n):
-###############find n most popular items#############
+"""
+return n most popular items from all items bought
+"""
     popularity= df['StockCode'].value_counts().to_frame().reset_index().rename(columns={'index':'StockCode', 'StockCode':'count'})
     return popularity['StockCode'].iloc[0:n].tolist()
 def find_popular_by_cust(df, n):
-###############find n most popular items by how many customers bought it###################
+"""
+return n most popular items from how many customers bought item
+"""
     df1=df[['StockCode', 'CustomerID']].drop_duplicates()
     popularity= df1['StockCode'].value_counts().to_frame().reset_index().rename(columns={'index':'StockCode', 'StockCode':'count'})
     return popularity['StockCode'].iloc[0:n].tolist()
