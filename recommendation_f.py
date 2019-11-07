@@ -14,12 +14,16 @@ from mlxtend.preprocessing import TransactionEncoder
 from mlxtend.frequent_patterns import apriori
 
 def remove_extra(vect, a):
-###REMOVE RECOMMENDED POPULAR ITEMS WHICH REPEAT USER ITEMS #####
+"""
+REMOVE RECOMMENDED POPULAR ITEMS (vect) WHICH REPEAT USER ITEMS (a)
+"""
     if a in vect:
        vect.remove(a)
     return vect
 def buy_again(vect, a, b):
-####recommend items that usually bought more than ones to users who bought this item before########################
+"""
+recommend items that usually bought more than ones to users who bought this item before
+"""
     if a not in vect and a in b:
        vect.append(a)
     return vect
@@ -60,9 +64,11 @@ def pop_by_season(df, n):
         pop_seas[i]=find_popular_by_cust(df[df['season']==i], n)
     return pop_seas
 def split_seasons(df, n, pop_s): 
-    #######popular items to recommend by seasons#######################
-    #############pop_s list of popular items for each season, 
-    ################n related to numbers of popular items to leave for given activity group###############
+    """
+    popular items to recommend by season
+    pop_s list of popular items for each season, 
+    n related to numbers of popular items to leave for given activity group
+    """
     y=[-60, -10, 20, 50]
     for i in range(4):
         df.loc[df['season']==i, ['Items']]=df.loc[df['season']==i, ['Items']].apply(lambda x: x+pop_s[i][:n+y[i]])
