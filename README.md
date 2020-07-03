@@ -3,7 +3,7 @@ Analytics Vidhya hackathon, rank 36 on leader board from 3978 registered partici
 
 libraries: mlxtend, numpy, pandas
 
-files: recomendations.py - code; 
+files: recomendation_f.py - code; train_5UKooLv.csv - train data
 
 Author: Inga Kuznetsova
 
