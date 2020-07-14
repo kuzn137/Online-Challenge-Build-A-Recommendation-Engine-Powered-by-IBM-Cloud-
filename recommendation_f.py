@@ -254,8 +254,6 @@ df1=df1.drop_duplicates(keep='last')
 df1['Items']=df1['Items'].apply(lambda x: x.split(' '))
 df1.to_csv('result.csv', index=False)
 print(df1)
-#df2 = recommendation_ff()
-#print(df1.equals(df2))
 del df
 del dftr
 del dft
