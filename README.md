@@ -1,5 +1,6 @@
 # Online-Challenge-Build-A-Recommendation-Engine-Powered-by-IBM-Cloud-
 Analytics Vidhya hackathon, rank 36 on leader board from 3978 registered participants, 186 submitted to leader board.
+https://datahack.analyticsvidhya.com/contest/build-a-recommendation-engine-powered-by-ibm-cloud/
 ## Libraries
 mlxtend, numpy, pandas
 ## Files
